@@ -223,12 +223,12 @@ process
     $FileParserDuration = $StopWatch.Elapsed.TotalMilliseconds
     Write-Verbose "$FileParserDuration milliseconds to parse all the chunks"
 
-    $Errors = New-Object -typename System.Collections.ArrayList
+    $Errors = @()
     $Counter = 0
     ForEach ($PowerShellObject in $PowerShellObjects)
     {
         $Data = $PowerShellObject.EndInvoke($Jobs[$Counter])
-        [void]$Errors.Add($Data.ErrorLogObjects)
+        $Errors += $Data.ErrorLogObjects
         $Counter++
         $PowerShellObject.Runspace.Dispose()
         $PowerShellObject.Dispose()
